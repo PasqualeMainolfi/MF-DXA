@@ -1,0 +1,7 @@
+clang++
+-std=c++2b
+-Wextra
+-Wall
+-larmadillo
+-L/opt/homebrew/opt/armadillo/lib
+-I/opt/homebrew/opt/armadillo/include
