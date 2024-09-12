@@ -65,3 +65,36 @@ C++ implementation of Multifractal detrended cross-correlation analysis for two 
 - For very long time series, computational optimization techniques may be necessary.
 - The choice of polynomial order for detrending can influence the results, so experimenting with different orders may be required.
 - It is important to check the robustness of the results by varying the analysis parameters, such as the range of $s$ and $q$.
+
+# HOW TO USE
+
+### Steps to Install Armadillo and Set Up a Project
+
+1. **Install Armadillo:**
+   - Download Armadillo from the official website: [https://arma.sourceforge.net/](https://arma.sourceforge.net/).
+   - Follow the installation instructions provided on the Armadillo website to properly install the library on your system.
+
+2. **Modify the Makefile to Include Armadillo:**
+   - Open the `Makefile` for your project.
+   - Update the library and include paths to point to the locations where Armadillo is installed.
+     - Example:
+       ```make
+       IMPLIB = -L/path/to/armadillo/lib
+       IMPINC = -I./include -I/path/to/armadillo/include
+       ```
+
+3. **Change the `examples/test.cpp` Path in the Makefile:**
+   - Locate the part of the `Makefile` that references `examples/test.cpp`.
+   - Replace this path with the path to your own script (e.g., `your_script.cpp`):
+     ```make
+     SOURCE = path/to/script.cpp src/mfdxa.cpp
+     ```
+
+4. **Compile Using Make:**
+   - Once the `Makefile` is properly set up with the correct paths, compile your program by running:
+     ```bash
+     make
+     ```
+
+5. **Plot a Graph Using Gnuplot:**
+   - To visualize your results, you can use Gnuplot. After running your program, you can pipe or redirect the output to Gnuplot for plotting (see /examples)

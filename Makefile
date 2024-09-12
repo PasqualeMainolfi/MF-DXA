@@ -2,10 +2,10 @@ CC = clang++
 FLAG = -std=c++2b -Wextra -Wall
 LIBS = -larmadillo
 IMPLIB = -L/opt/homebrew/opt/armadillo/lib
-IMPINC = -I/opt/homebrew/opt/armadillo/include
+IMPINC = -I./include -I/opt/homebrew/opt/armadillo/include
 
 TARGET = out
-SOURCE = test.cpp mfdxa.cpp
+SOURCE = examples/test.cpp src/mfdxa.cpp
 
 .PHONY: all
 

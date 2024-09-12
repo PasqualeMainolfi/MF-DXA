@@ -7,12 +7,11 @@
 #include <fstream>
 #include <random>
 
-const std::vector<size_t> WIN_SIZES = { 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8820 };
+const std::vector<size_t> WIN_SIZES = { 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8820, 16384 };
 
 const std::vector<double> Q = { -2.0, -1.0, 0.0, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0 };
 const int POLI_ORDER = 2;
-const size_t N = 16384;
-
+const size_t N = 44100;
 
 int main() {
 
@@ -31,7 +30,6 @@ int main() {
 		y_serie.push_back(sine + r2);
 	}
 
-
 	MFDXA mfdxa(WIN_SIZES, POLI_ORDER);
 
 	double q = Q[5];
@@ -46,13 +44,13 @@ int main() {
 	data_vector f = fluctuation.fluctuation_vector;
 	data_vector s = fluctuation.sizes;
 
-	std::ofstream data_file("temp_data.txt");
+	std::ofstream data_file("examples/temp_data.txt");
 	for (size_t i = 0; i < f.size(); ++i) {
 		data_file << s[i] << " " << f[i] << std::endl;
 	}
 	data_file.close();
 
-	std::ofstream data_plot("plot_data.gp");
+	std::ofstream data_plot("examples/plot_data.gp");
 	data_plot << "set title 'MF-DXA'\n";
 	data_plot << "set xlabel 'log(s)'\n";
 	data_plot << "set ylabel 'log(Fs(s))'\n";

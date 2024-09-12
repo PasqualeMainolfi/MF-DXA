@@ -5,3 +5,4 @@ clang++
 -larmadillo
 -L/opt/homebrew/opt/armadillo/lib
 -I/opt/homebrew/opt/armadillo/include
+-I./include
