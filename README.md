@@ -28,17 +28,13 @@ C++ implementation of Multifractal detrended cross-correlation analysis for two 
 
 - For each segment $v$, calculate the local covariance $F^2_{xy}(s,v)$ using polynomials of order $m$ (typically linear or quadratic) to detrend both series.
 - The general formula is:
-  $$
-  F^2_{xy}(s,v) = \frac{1}{s} \sum_{k=1}^s \left[ \left(X((v-1)s+k) - \tilde{X}_v(k)\right) \cdot \left(Y((v-1)s+k) - \tilde{Y}_v(k)\right) \right]
-  $$
+  $$F^2_{xy}(s,v) = \frac{1}{s} \sum_{k=1}^s \left[ \left(X((v-1)s+k) - \tilde{X}_v(k)\right) \cdot \left(Y((v-1)s+k) - \tilde{Y}_v(k)\right) \right]$$
 - Where $\tilde{X}_v(k)$ and $\tilde{Y}_v(k)$ are the estimated local trends.
 
 ## 5. Calculation of Fluctuation Function
 
 - Calculate the $q$-th order fluctuation function:
-  $$
-  F_q(s) = \left\{ \frac{1}{N_s} \sum_{v=1}^{N_s} \text{sign}\left[F^2_{xy}(s,v)\right] \cdot \left|F^2_{xy}(s,v)\right|^{(q/2)} \right\}^{(1/q)}
-  $$
+  $$F_q(s) = \left\{ \frac{1}{N_s} \sum_{v=1}^{N_s} \text{sign}\left[F^2_{xy}(s,v)\right] \cdot \left|F^2_{xy}(s,v)\right|^{(q/2)} \right\}^{(1/q)}$$
 - Repeat this calculation for different values of $q$ (both positive and negative).
 
 ## 6. Repetition for Different Scales
