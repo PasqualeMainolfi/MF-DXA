@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <vector>
 
+
 data_vector get_profile(data_vector& data)
 {
 	double average = 0.0;
@@ -51,23 +52,36 @@ arma::vec fit_polynomials(data_vector& x, arma::mat& poly_matrix)
 	return coeffs;
 }
 
-
-double calculate_local_coovariance(data_vector& x, arma::vec& coeffs, arma::mat& poly_matrix)
+double calculate_local_coovariance(data_vector& x, arma::vec& x_coeffs, data_vector& y, arma::vec& y_coeffs, arma::mat& poly_matrix)
 {
-	arma::vec frame(x);
-	arma::vec trend = poly_matrix * coeffs;
-	arma::vec detrend = frame - trend;
-	double value = arma::sum(arma::square(detrend));
+	arma::vec framex(x);
+	arma::vec framey(y);
+	arma::vec trendx = poly_matrix * x_coeffs;
+	arma::vec trendy = poly_matrix * y_coeffs;
+	arma::vec detrendx = framex - trendx;
+	arma::vec detrendy = framey - trendy;
+	double value = arma::mean(detrendx % detrendy);
 	return value;
 }
 
 double calculate_fluctuation(data_vector& local_coovariance, double q)
 {
 	arma::vec c(local_coovariance);
-	arma::vec c_sign = arma::sign(c);
-	arma::vec c_abs = arma::pow(arma::abs(c), q / 2.0);
-	double fluct = arma::sum(c_sign % c_abs) / (double) local_coovariance.size();
-	fluct = std::pow(fluct, q);
+	double fluct = 0.0;
+
+	if (q == 2.0) {
+		fluct = arma::mean(arma::square(c));
+		fluct = std::sqrt(fluct);
+	} else if (q == 0.0) {
+		arma::vec c_log = arma::log(arma::abs(c) + EPS);
+		fluct = std::exp(arma::mean(c_log));
+	} else {
+		arma::vec c_sign = arma::sign(c);
+		arma::vec c_abs = arma::pow(arma::abs(c) + EPS, q / 2.0);
+		fluct = arma::mean(c_sign % c_abs);
+		fluct = std::pow(std::abs(fluct), 1.0 / q);
+	}
+	if (std::isnan(fluct) || fluct < 0.0) fluct = EPS;
 	return fluct;
 }
 
@@ -81,7 +95,6 @@ arma::mat get_poly_matrix(arma::vec& time, size_t frame_length, int order)
 }
 
 // MF-DXA CLASS
-
 MFDXA::MFDXA(std::vector<size_t> win_sizes, int poly_order)
 : win_sizes(win_sizes), poly_order(poly_order)
 { }
@@ -133,9 +146,7 @@ FluctuationData MFDXA::calculate_local_coovariance_and_fluctuation(data_vector& 
 			data_vector y_frame = this->y_frames[i];
 
 			Coeffs coeffs = this->fit_poly(x_frame, y_frame, pm);
-			double x_coov = calculate_local_coovariance(x_frame, coeffs.x_coeffs, pm);
-			double y_coov = calculate_local_coovariance(y_frame, coeffs.y_coeffs, pm);
-			double lc = (x_coov * y_coov) / (double) frame_size;
+			double lc = calculate_local_coovariance(x_frame, coeffs.x_coeffs, y_frame, coeffs.y_coeffs, pm);
 			local_coovariance.push_back(lc);
 		}
 		double f = calculate_fluctuation(local_coovariance, q);

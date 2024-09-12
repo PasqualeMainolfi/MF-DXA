@@ -7,8 +7,7 @@
 #include <fstream>
 #include <random>
 
-const std::vector<size_t> WIN_SIZES = { 32, 40, 48, 56, 64, 96, 112, 128, 160, 192, 224, 256,
-										320, 384, 448, 512, 640, 1536, 2048, 2560, 3072, 4096 };
+const std::vector<size_t> WIN_SIZES = { 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8820 };
 
 const std::vector<double> Q = { -2.0, -1.0, 0.0, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0 };
 const int POLI_ORDER = 2;
@@ -35,7 +34,7 @@ int main() {
 
 	MFDXA mfdxa(WIN_SIZES, POLI_ORDER);
 
-	double q = Q[6];
+	double q = Q[5];
 	FluctuationData fluctuation = mfdxa.calculate_local_coovariance_and_fluctuation(x_serie, y_serie, q, false);
 
 	std::cout << "FLUCTUATION VECTOR" << std::endl;

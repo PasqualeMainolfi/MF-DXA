@@ -6,6 +6,8 @@
 #include <vector>
 #include "armadillo"
 
+#define EPS (1e-10)
+
 using data_vector = std::vector<double>;
 using data_matrix = std::vector<std::vector<double>>;
 
