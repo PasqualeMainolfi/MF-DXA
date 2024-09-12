@@ -34,7 +34,9 @@ C++ implementation of Multifractal detrended cross-correlation analysis for two 
 ## 5. Calculation of Fluctuation Function
 
 - Calculate the $q$-th order fluctuation function:
-  $$F_q(s) = \left\{ \frac{1}{N_s} \sum_{v=1}^{N_s} \text{sign}\left[F^2_{xy}(s,v)\right] \cdot \left|F^2_{xy}(s,v)\right|^{(q/2)} \right\}^{(1/q)}$$
+  $$
+  F_q(s) = \left( \frac{1}{N_s} \sum_{v=1}^{N_s} \text{sign}\left[F_{xy}^2(s,v)\right] \cdot \left| F_{xy}^2(s,v) \right|^{\frac{q}{2}} \right)^{\frac{1}{q}}
+  $$  
 - Repeat this calculation for different values of $q$ (both positive and negative).
 
 ## 6. Repetition for Different Scales
