@@ -8,8 +8,8 @@
 #include <random>
 
 const std::vector<size_t> WIN_SIZES = { 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8820, 16384 };
-
 const std::vector<double> Q = { -2.0, -1.0, 0.0, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0 };
+
 const int POLI_ORDER = 2;
 const size_t N = 44100;
 
